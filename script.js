@@ -1,15 +1,16 @@
-const checkTimeButton = document.querySelector('.checkTime')
-const boxData = document.querySelector('.box')
-const hourValue = document.querySelector('.hourValue')
-const climateValue = document.querySelector('.climateValue')
-const tempValue = document.querySelector('.tempValue')
-const umidadeValue = document.querySelector('.umidadeValue')
-const stateValue = document.querySelector('.stateValue')
-const cityValue = document.querySelector('.cityValue')
-const countryValue = document.querySelector('.countryValue')
+const checkTimeButton = document.querySelector('.checkTime');
+const boxData = document.querySelector('.box');
+const hourValue = document.querySelector('.hourValue');
+const climateValue = document.querySelector('.climateValue');
+const tempValue = document.querySelector('.tempValue');
+const umidadeValue = document.querySelector('.umidadeValue');
+const stateValue = document.querySelector('.stateValue');
+const cityValue = document.querySelector('.cityValue');
+const countryValue = document.querySelector('.countryValue');
 
-let query = ''
+let query = '';
 let geoLocation = null;
+let dataInterval;
 
 if ("geolocation" in navigator) {
   navigator.geolocation.getCurrentPosition(function (position) {
@@ -18,9 +19,8 @@ if ("geolocation" in navigator) {
 
     geoLocation = [latitude, longitude];
 
-    query = `${geoLocation[0]},${geoLocation[1]}`
+    query = `${geoLocation[0]},${geoLocation[1]}`;
 
-    console.log(geoLocation);
   }, function (error) {
     console.error('Erro ao obter a geolocalização:', error);
   });
@@ -28,13 +28,28 @@ if ("geolocation" in navigator) {
   alert("Geolocalização não é suportada neste navegador.");
 }
 
+function atualizarData() {
+  const timeElapsed = Date.now();
+  const today = new Date(timeElapsed);
+  let data = today.toLocaleTimeString();
+
+  hourValue.innerHTML = data; 
+
+  dataInterval = setInterval(() => {
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed);
+    let data = today.toLocaleTimeString();
+    hourValue.innerHTML = data;
+  }, 1000);
+}
+
 checkTimeButton.addEventListener('click', async () => {
   checkTimeButton.classList.add('active');
-  checkTimeButton.innerHTML = 'Verificar Novamente'
-  boxData.classList.add('active')
+  checkTimeButton.innerHTML = 'Verificar Novamente';
+  boxData.classList.add('active');
 
-  const api = `https://api.weatherapi.com/v1/current.json?key=7a609d1f8bc74d57942113350231309&q=${query}`
-  
+  const api = `https://api.weatherapi.com/v1/current.json?key=7a609d1f8bc74d57942113350231309&q=${query}`;
+
   async function getData() {
     try {
       const response = await fetch(api);
@@ -43,25 +58,19 @@ checkTimeButton.addEventListener('click', async () => {
       return data;
     } catch (error) {
       console.log(error);
-      alert('Verifique se permitiu a Localização')
-      throw new Error('Erro to get data')
+      alert('Verifique se permitiu a Localização');
+      throw new Error('Erro ao obter dados');
     }
   }
 
-  response = await getData()
+  const response = await getData();
 
-  console.log(response)
+  cityValue.innerHTML = response.location.name;
+  stateValue.innerHTML = response.location.region;
+  countryValue.innerHTML = response.location.country;
+  climateValue.innerHTML = response.current.condition.text;
+  tempValue.innerHTML = `${response.current.feelslike_c}°C`;
+  umidadeValue.innerHTML = `${response.current.humidity}%`;
 
-  const timeElapsed = Date.now();
-  const today = new Date(timeElapsed);
-  let data = today.toLocaleTimeString()
-
-  cityValue.innerHTML = response.location.name
-  stateValue.innerHTML = response.location.region
-  countryValue.innerHTML = response.location.country
-  hourValue.innerHTML = data
-  climateValue.innerHTML = response.current.condition.text
-  tempValue.innerHTML = `${response.current.feelslike_c}°C`
-  umidadeValue.innerHTML = `${response.current.humidity}%`
-
+  atualizarData();
 });
