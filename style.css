@@ -1,0 +1,162 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: 200ms ease-in-out;
+}
+
+body {
+  background-color: lightgray;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.divButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: fit-content;
+
+  position: relative;
+  top: 50%;
+}
+
+.checkTime {
+  position: relative;
+  background: transparent;
+
+  width: 15rem;
+  height: 2.5em;
+
+
+  border: solid 2px orange;
+  border-radius: .3em;
+
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: black;
+}
+
+.checkTime:hover {
+  background-color: orange;
+  border: solid 2px black;
+  font-weight: bold;
+}
+
+.checkTime.active{
+  position: absolute;
+  margin-top: 50em;
+}
+
+.box{
+  display: none;
+}
+
+.box.active{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  
+  width: 30em;
+  height: 35em;
+
+  position: relative;
+  top: 10%;
+
+  border-radius: 1em;
+  border: solid 2px orange;
+
+  animation: aparecer ease-in-out 300ms forwards;
+  backdrop-filter: blur(5px);
+}
+
+.boxResults{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+
+.title{
+  position: relative;
+  top: -8em;
+  
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.data{
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.hour{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5em;
+}
+
+.climate{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5em;
+}
+.temperature{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5em;
+}
+
+.humidade{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5em;
+}
+
+.city{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5em;
+}
+
+.state{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5em;
+}
+
+.country{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: .5em;
+}
+p{
+  font-family: Poppins;
+  font-weight: 300;
+}
+
+@keyframes aparecer {
+  from{
+    transform: scale(0);
+  }
+
+  to{
+    transform: scale(1);
+  }
+}
