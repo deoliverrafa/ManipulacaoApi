@@ -33,8 +33,8 @@ checkTimeButton.addEventListener('click', async () => {
   checkTimeButton.innerHTML = 'Verificar Novamente'
   boxData.classList.add('active')
 
-  const api = `http://api.weatherapi.com/v1/current.json?key=7a609d1f8bc74d57942113350231309&q=${query}`
-
+  const api = `https://api.weatherapi.com/v1/current.json?key=7a609d1f8bc74d57942113350231309&q=${query}`
+  
   async function getData() {
     try {
       const response = await fetch(api);
